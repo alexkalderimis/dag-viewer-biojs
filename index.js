@@ -1,9 +1,13 @@
 /**
- * Biojs.DAGViewer
+ * @module "dag-viewer"
  * @version 0.0.1
+ * @author <a href="mailto:alex@intermine.org">Alex Kalderimis</a>
+ * @license LGPL
  */
 (function (module) {
-
+  /**
+   * @lends Biojs.DAGViewer
+   **/
   module.DAGViewer = DAGViewer;
 
   // A plain alpha-numeric string with underscores and hyphens.
@@ -16,9 +20,8 @@
    * A component for displaying directed acyclic graphs (DAGs)
    * in a visually clear manner.
    *
+   * @constructor
    * @class
-   * @lends Biojs.DAGViewer
-   * @author <a href="mailto:alex@intermine.org">Alex Kalderimis</a>
    *
    * @requires <a href="https://github.com/alexkalderimis/dagify">Dagify</a>
    * @requires <a href="http://foundation.zurb.com/">Foundation 5</a>
@@ -82,6 +85,41 @@
   DAGViewer.prototype = {
 
      constructor: DAGViewer
+
+    ,eventTypes: [
+
+      /**
+       * Called when a node in the Graph has been clicked on.
+       * @event
+       * @name Biojs.InterMineTable#click:node
+       * @param {function} callback The function to call.
+       * @eventData {String} id The id of the node.
+       * @eventData {Backbone.Model} node The model representing the node.
+       *
+       * @example
+       * table.addListener('click:node', function (id, node) {
+       *   alert(node.get('name'));
+       * });
+       */
+      'onQueryChanged',
+
+      /**
+       * Called when an edge in the Graph has been clicked on.
+       * @event
+       * @name Biojs.InterMineTable#click:edge
+       * @param {function} callback The function to call.
+       * @eventData {Graph} graph The current graph.
+       * @eventData {String} edgeId The id of the current edge.
+       *
+       * @example
+       * table.addListener('click:edge', function (graph, edge) {
+       *   var src = graph.node(edge.get('source'));
+       *   var tgt = graph.node(edge.get('target'));
+       *   alert(src.get('name') + ' are ' + tgt.get('name'));
+       * });
+       */
+      'onQueryError'
+      ]
     
      /**
       * Set the graph model that this viewer presents.
