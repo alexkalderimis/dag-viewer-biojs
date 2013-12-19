@@ -105,9 +105,13 @@
     {id: 103, name: "Gheg", type: "dialect", direct: true},
     {id: 104, name: "Tosk", type: "dialect", direct: true},
 
+    {id: 201, name: "Afro-Asiatic", type: "family"},
+    {id: 202, name: "Semetic", type: "family"},
+    {id: 203, name: "Hebrew", type: "language", direct: true},
+    {id: 204, name: "Amharic", type: "language", direct: true},
     {id: 200, name: "Arabic", type: "language", direct: true},
 
-    {id: 1000, name: "Balkan", type: "sprachbund"}
+    {id: 1000, name: "Balkan Sprachbund", type: "sprachbund"}
 
   ]
 
@@ -232,36 +236,43 @@
     {source: 103, target: 102, relationship: "descends from"},
     {source: 104, target: 102, relationship: "descends from"},
 
+    // Afro-Asiatic
+    {source: 200, target: 202, relationship: "descends from"},
+    {source: 204, target: 202, relationship: "descends from"},
+    {source: 203, target: 202, relationship: "descends from"},
+    {source: 202, target: 201, relationship: "descends from"},
+
     // Influences - for complexities sake.
-    {source: 94, target: 95, relationship: "influences"},
-    {source: 96, target: 36, relationship: "influences"},
-    {source: 96, target: 94, relationship: "influences"},
-    {source: 96, target: 80, relationship: "influences"},
-    {source: 96, target: 45, relationship: "influences"},
-    {source: 44, target: 93, relationship: "influences"},
-    {source: 94, target: 80, relationship: "influences"},
-    {source: 94, target: 67, relationship: "influences"},
-    {source: 94, target: 30, relationship: "influences"},
-    {source: 94, target: 28, relationship: "influences"},
-    {source: 94, target: 29, relationship: "influences"},
-    {source: 94, target: 73, relationship: "influences"},
-    {source: 94, target: 74, relationship: "influences"},
-    {source: 67, target: 62, relationship: "influences"},
-    {source: 67, target: 61, relationship: "influences"},
-    {source: 67, target: 63, relationship: "influences"},
-    {source: 80, target: 64, relationship: "influences"},
-    {source: 94, target: 62, relationship: "influences"},
-    {source: 80, target: 62, relationship: "influences"},
-    {source: 45, target: 32, relationship: "influences"},
-    {source: 36, target: 94, relationship: "influences"},
-    {source: 36, target: 80, relationship: "influences"},
-    {source: 36, target: 45, relationship: "influences"},
-    {source: 36, target: 43, relationship: "influences"},
-    {source: 37, target: 25, relationship: "influences"},
-    {source: 200, target: 43, relationship: "influences"},
-    {source: 200, target: 16, relationship: "influences"},
-    {source: 94, target: 15, relationship: "influences"},
-    {source: 23, target: 101, relationship: "influences"},
+    {source: 95, target: 94,   relationship: "influenced by"},
+    {source: 94, target: 96,   relationship: "influenced by"},
+    {source: 36, target: 96,   relationship: "influenced by"},
+    {source: 94, target: 96,   relationship: "influenced by"},
+    {source: 80, target: 96,   relationship: "influenced by"},
+    {source: 45, target: 96,   relationship: "influenced by"},
+    {source: 93, target: 44,   relationship: "influenced by"},
+    {source: 80, target: 94,   relationship: "influenced by"},
+    {source: 67, target: 94,   relationship: "influenced by"},
+    {source: 30, target: 94,   relationship: "influenced by"},
+    {source: 28, target: 94,   relationship: "influenced by"},
+    {source: 29, target: 94,   relationship: "influenced by"},
+    {source: 73, target: 94,   relationship: "influenced by"},
+    {source: 74, target: 94,   relationship: "influenced by"},
+    {source: 62, target: 67,   relationship: "influenced by"},
+    {source: 61, target: 67,   relationship: "influenced by"},
+    {source: 63, target: 67,   relationship: "influenced by"},
+    {source: 64, target: 80,   relationship: "influenced by"},
+    {source: 62, target: 94,   relationship: "influenced by"},
+    {source: 62, target: 80,   relationship: "influenced by"},
+    {source: 32, target: 45,   relationship: "influenced by"},
+    {source: 94, target: 36,   relationship: "influenced by"},
+    {source: 80, target: 36,   relationship: "influenced by"},
+    {source: 45, target: 36,   relationship: "influenced by"},
+    {source: 43, target: 36,   relationship: "influenced by"},
+    {source: 25, target: 37,   relationship: "influenced by"},
+    {source: 43, target: 200, relationship: "influenced by"},
+    {source: 16, target: 200, relationship: "influenced by"},
+    {source: 15, target: 94,   relationship: "influenced by"},
+    {source: 101,target: 23,   relationship: "influenced by"},
 
     // Areal influences.
     {source: 24, target: 1000, relationship: "belongs to"},
@@ -276,14 +287,24 @@
 
   var viewer = new B.DAGViewer({
     target: 'dag-viewer',
+    isClosable: function () { return false; },
     edgeLabels: ['relationship'],
     edgeProps: ['source', 'target'],
-    termTemplate: '<li><a><%- name %></a></li>',
+    termTemplate: '<%- name %>',
     termKey: function (t) { return t.id },
     getEnds: function (e) { return [e.get('source'), e.get('target')] },
     edgeKey: function (e) { return String(e.source) + e.relationship + String(e.target) },
     getNodeClass: function (node) { return node.get('type'); }
   });
   viewer.setGraph({nodes: nodes, edges: edges});
+  viewer.addListener('click:node', function (id, node) {
+    console.log("User clicked " + node.get('name'));
+  });
+  viewer.addListener('click:edge', function (graph, eid) {
+    var edge = graph.edge(eid);
+    var src = graph.node(edge.get('source'));
+    var tgt = graph.node(edge.get('target'));
+    console.log(src.get('name') + ' ' + edge.get('relationship') + ' ' + tgt.get('name'));
+  });
 
 })(window.Biojs);
