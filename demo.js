@@ -98,7 +98,17 @@
     {id: 92, name: "Old English / Anglo-Saxon", type: "language"},
     {id: 93, name: "Middle English", type: "language"},
     {id: 94, name: "English", type: "language", direct: true},
-    {id: 95, name: "Scots", type: "language", direct: true}
+    {id: 95, name: "Scots", type: "language", direct: true},
+    {id: 100, name: "Albanian", type: "family"},
+    {id: 101, name: "Illyrian", type: "language"},
+    {id: 102, name: "Albanian", type: "language", direct: true},
+    {id: 103, name: "Gheg", type: "dialect", direct: true},
+    {id: 104, name: "Tosk", type: "dialect", direct: true},
+
+    {id: 200, name: "Arabic", type: "language", direct: true},
+
+    {id: 1000, name: "Balkan", type: "sprachbund"}
+
   ]
 
   var edges = [
@@ -213,7 +223,47 @@
     {source: 92, target: 90, relationship: "descends from"},
     {source: 93, target: 92, relationship: "descends from"},
     {source: 94, target: 93, relationship: "descends from"},
-    {source: 95, target: 93, relationship: "descends from"}
+    {source: 95, target: 93, relationship: "descends from"},
+
+    // Illyrian
+    {source: 100, target: 01, relationship: "descends from"},
+    {source: 101, target: 100, relationship: "descends from"},
+    {source: 102, target: 101, relationship: "descends from"},
+    {source: 103, target: 102, relationship: "descends from"},
+    {source: 104, target: 102, relationship: "descends from"},
+
+    // Influences - for complexities sake.
+    {source: 94, target: 95, relationship: "influences"},
+    {source: 96, target: 36, relationship: "influences"},
+    {source: 96, target: 94, relationship: "influences"},
+    {source: 96, target: 80, relationship: "influences"},
+    {source: 96, target: 45, relationship: "influences"},
+    {source: 44, target: 93, relationship: "influences"},
+    {source: 94, target: 80, relationship: "influences"},
+    {source: 94, target: 67, relationship: "influences"},
+    {source: 94, target: 30, relationship: "influences"},
+    {source: 94, target: 28, relationship: "influences"},
+    {source: 94, target: 29, relationship: "influences"},
+    {source: 45, target: 32, relationship: "influences"},
+    {source: 36, target: 94, relationship: "influences"},
+    {source: 36, target: 80, relationship: "influences"},
+    {source: 36, target: 45, relationship: "influences"},
+    {source: 36, target: 43, relationship: "influences"},
+    {source: 37, target: 25, relationship: "influences"},
+    {source: 200, target: 43, relationship: "influences"},
+    {source: 200, target: 16, relationship: "influences"},
+    {source: 94, target: 15, relationship: "influences"},
+    {source: 23, target: 101, relationship: "influences"},
+
+    // Areal influences.
+    {source: 24, target: 1000, relationship: "belongs to"},
+    {source: 58, target: 1000, relationship: "belongs to"},
+    {source: 59, target: 1000, relationship: "belongs to"},
+    {source: 49, target: 1000, relationship: "belongs to"},
+    {source: 49, target: 1000, relationship: "belongs to"},
+    {source: 102, target: 1000, relationship: "belongs to"}
+
+
   ];
 
   var viewer = new B.DAGViewer({
