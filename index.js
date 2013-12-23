@@ -1,5 +1,5 @@
 /**
- * @module "dag-viewer"
+ * @module "biojs-dag-viewer"
  * @version 0.0.1
  * @author <a href="mailto:alex@intermine.org">Alex Kalderimis</a>
  * @license LGPL
