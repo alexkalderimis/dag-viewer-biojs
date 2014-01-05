@@ -101,7 +101,7 @@
        *   alert(node.get('name'));
        * });
        */
-      'onQueryChanged',
+      'click:node',
 
       /**
        * Called when an edge in the Graph has been clicked on.
@@ -118,7 +118,7 @@
        *   alert(src.get('name') + ' are ' + tgt.get('name'));
        * });
        */
-      'onQueryError'
+      'click:edge'
       ]
     
      /**
@@ -177,6 +177,24 @@
       var cbs = this._cbs;
       var cbsForThisEvent = (cbs[eventName] || (cbs[eventName] = []));
       cbsForThisEvent.push(callback);
+     }
+
+    /**
+     * Add a global event listener.
+     *
+     * @param {function} callback
+     *  The handler to call for all events.
+     *
+     * @example
+     * viewer.addGlobalListener(function (evt) {
+     *   alert("Caught event: " + evt);
+     * }
+     */
+    ,addGlobalListener: function (callback) {
+      if (!(callback)) {
+        throw new Error("callback is a required argument");
+      }
+      this._globalListeners.push(callback);
      }
 
     /**
